@@ -52,6 +52,7 @@ public class AuthorizationController {
     JWT token'i olusturarak yanit olarak döner.
 
      */
+    //abc
 
 
     @PostMapping("register")
