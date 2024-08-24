@@ -53,6 +53,7 @@ public class AuthorizationController {
 
      */
 
+
     @PostMapping("register")
     public ResponseEntity<Boolean> loginHandler(User user){
         String defaultRoleName="ROLE_NAME";
