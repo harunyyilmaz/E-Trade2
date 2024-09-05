@@ -1,5 +1,6 @@
 package kodlama.io.E_Trade2.webApiControllers;
 
+import jakarta.validation.Valid;
 import kodlama.io.E_Trade2.business.abstracts.CustomerService;
 import kodlama.io.E_Trade2.dtos.requests.CreateCustomerRequest;
 import kodlama.io.E_Trade2.dtos.requests.UpdateCustomerRequest;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("api/customers")
+@RequestMapping("/api/customers")
 @AllArgsConstructor
 public class CustomersController {
 
@@ -23,19 +24,19 @@ public class CustomersController {
         return this.customerService.getAll();
     }
     @GetMapping("/{id}")
-    public GetByIdCustomersResponse getById(Long id){
+    public GetByIdCustomersResponse getById(@PathVariable Long id){
         return this.customerService.getById(id);
     }
     @PostMapping
-    public void add(CreateCustomerRequest createCustomerRequest){
+    public void add(@RequestBody @Valid CreateCustomerRequest createCustomerRequest){
         this.customerService.add(createCustomerRequest);
     }
     @PutMapping
-    public void update(UpdateCustomerRequest updateCustomerRequest){
+    public void update(@RequestBody @Valid UpdateCustomerRequest updateCustomerRequest){
         this.customerService.update(updateCustomerRequest);
     }
     @DeleteMapping
-    public void delete(Long id){
+    public void delete(@PathVariable Long id){
         this.customerService.delete(id);
     }
 }

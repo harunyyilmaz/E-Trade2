@@ -6,6 +6,7 @@ import kodlama.io.E_Trade2.base.BaseEntity;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Table(name = "products")
@@ -33,4 +34,10 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Customer> customers = new HashSet<>();
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
+
+    @OneToMany(mappedBy = "product" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    private List<ProductImage> productImages;
 }

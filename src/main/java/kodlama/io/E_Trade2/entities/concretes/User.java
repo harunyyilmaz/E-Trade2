@@ -42,6 +42,9 @@ public class User extends BaseEntity {
     @JsonProperty("isEnable")
     private boolean isEnable;
 
+    @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    private List<Order> orders;
+
     @ManyToMany(fetch = FetchType.EAGER , cascade = {CascadeType.MERGE , CascadeType.PERSIST})
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn (name = "user_id"),

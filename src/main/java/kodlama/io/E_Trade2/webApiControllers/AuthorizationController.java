@@ -55,7 +55,7 @@ public class AuthorizationController {
     //abc
 
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<Boolean> loginHandler(User user){
         String defaultRoleName="ROLE_NAME";
         userService.saveUserByRole(user,defaultRoleName);

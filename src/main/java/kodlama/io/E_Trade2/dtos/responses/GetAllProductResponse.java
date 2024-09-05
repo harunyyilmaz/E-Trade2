@@ -1,8 +1,12 @@
 package kodlama.io.E_Trade2.dtos.responses;
 
+import kodlama.io.E_Trade2.entities.concretes.Order;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Getter
@@ -16,5 +20,8 @@ public class GetAllProductResponse {
     private int quantity;
     private Long categoryId;
     private String categoryName;
+    private List<Long> orderId;
+    private Set<Long> customerId;
+
 
 }

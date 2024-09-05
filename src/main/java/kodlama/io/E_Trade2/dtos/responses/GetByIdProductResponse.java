@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +19,6 @@ public class GetByIdProductResponse {
     private int quantity;
     private Long categoryId;
     private String categoryName;
-
+    private Set<String> customerFirstName;
+    private List<Long> orderId;
 }
