@@ -1,6 +1,7 @@
 package kodlama.io.E_Trade2.business.concretes;
 
 import kodlama.io.E_Trade2.business.abstracts.ProductImageService;
+import kodlama.io.E_Trade2.business.rules.ProductImagesBusinessRules;
 import kodlama.io.E_Trade2.core.utilities.exceptions.BusinessException;
 import kodlama.io.E_Trade2.core.utilities.mappers.ModelMapperService;
 import kodlama.io.E_Trade2.dataBase.abstracts.ProductImageRepository;
@@ -25,9 +26,15 @@ public class ProductImageManager implements ProductImageService {
     private ProductImageRepository productImageRepository;
     private ModelMapperService modelMapperService;
     private ProductsRepository productsRepository;
+    private ProductImagesBusinessRules productImagesBusinessRules;
 
     @Override
     public ProductImage addProductImage(CreateProductImageRequest createProductImageRequest) {
+
+        //Asagidaki businessrules=Yeni bir ürün resmi eklerken, ürünün geçerli olup olmadığını
+        // kontrol etmek için kullanılabi
+        this.productImagesBusinessRules.validateAndGetProduct(createProductImageRequest.getProductId());
+
         ProductImage productImage = new ProductImage();
         productImage.setUrl(createProductImageRequest.getUrl());
         productImage.setThumbnailUrl(createProductImageRequest.getThumbnailUrl());
@@ -63,6 +70,13 @@ public class ProductImageManager implements ProductImageService {
     @Override
     public ProductImage updateProductImage(Long id, UpdateProductImageRequest updateProductImageRequest) {
 
+//Ürün adını doğrulamak için kullanılabilir. (Ürün adını güncelleme sırasında kullanıyorsan.)
+        this.productImagesBusinessRules.validateAndGetProductByName(updateProductImageRequest.getProductName());
+
+        //Güncelleme isteginin gecerliligini kontrol etmek icin
+        this.productImagesBusinessRules.validateUpdateRequest(updateProductImageRequest);
+
+
         ProductImage productImage = this.productImageRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("ProductImage not found"));
         /*NNNOTTTTTT:
@@ -90,6 +104,7 @@ public class ProductImageManager implements ProductImageService {
 
     @Override
     public void deleteProductImage(Long id) {
+        this.productImagesBusinessRules.checkIfProductImagesIdExists(id);
         this.productImageRepository.deleteById(id);
     }
 
@@ -101,6 +116,8 @@ public class ProductImageManager implements ProductImageService {
 
     @Override
     public Optional<GetByIdProductImageResponse> getById(Long id) {
+
+
         ProductImage productImage = this.productImageRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("ProductImage not found with ID" + id));
 

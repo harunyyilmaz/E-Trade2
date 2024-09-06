@@ -1,6 +1,8 @@
 package kodlama.io.E_Trade2.business.concretes;
 
 import kodlama.io.E_Trade2.business.abstracts.OrderItemService;
+import kodlama.io.E_Trade2.business.rules.OrderBusinessRules;
+import kodlama.io.E_Trade2.business.rules.OrderItemBusinessRules;
 import kodlama.io.E_Trade2.core.utilities.exceptions.BusinessException;
 import kodlama.io.E_Trade2.core.utilities.mappers.ModelMapperService;
 import kodlama.io.E_Trade2.dataBase.abstracts.OrderItemRepository;
@@ -27,6 +29,7 @@ public class OrderItemManager implements OrderItemService {
     private ModelMapperService modelMapperService;
     private ProductsRepository productsRepository;
     private OrderRepository orderRepository;
+    private OrderItemBusinessRules orderItemBusinessRules;
 
     @Override
     public List<GetAllOrderItemResponse> getAll() {
@@ -62,6 +65,9 @@ public class OrderItemManager implements OrderItemService {
 
     @Override
     public void add(CreateOrderItemRequest createOrderItemRequest) {
+
+        this.orderItemBusinessRules.validateQuantityOrderItem(createOrderItemRequest);
+        this.orderItemBusinessRules.validateUnitPriceOrderItem(createOrderItemRequest);
 
         OrderItem orderItem = new OrderItem();
         orderItem.setQuantity(createOrderItemRequest.getQuantity());

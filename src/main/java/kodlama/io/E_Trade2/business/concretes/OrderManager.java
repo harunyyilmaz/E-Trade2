@@ -1,6 +1,7 @@
 package kodlama.io.E_Trade2.business.concretes;
 
 import kodlama.io.E_Trade2.business.abstracts.OrderService;
+import kodlama.io.E_Trade2.business.rules.OrderBusinessRules;
 import kodlama.io.E_Trade2.core.utilities.exceptions.BusinessException;
 import kodlama.io.E_Trade2.core.utilities.exceptions.OrderCancellationException;
 import kodlama.io.E_Trade2.core.utilities.exceptions.OrderNotFoundException;
@@ -27,10 +28,12 @@ public class OrderManager implements OrderService {
     private OrderRepository orderRepository;
     private UserRepository userRepository;
     private ModelMapperService modelMapperService;
+    private OrderBusinessRules orderBusinessRules;
 
 
     @Override
     public List<GetAllOrderResponse> getAll() {
+
         List<Order> orders = this.orderRepository.findAll();
         List<GetAllOrderResponse> getAllOrderResponses = orders.stream()
                 .map(order -> {
@@ -72,6 +75,8 @@ public class OrderManager implements OrderService {
 
     @Override
     public void add(CreateOrderRequest createOrderRequest) {
+
+        this.orderBusinessRules.checkIfOrderNumberExists(createOrderRequest.getOrderNumber());
 
        Order order = new Order();
        order.setOrderNumber(createOrderRequest.getOrderNumber());
@@ -134,6 +139,13 @@ public class OrderManager implements OrderService {
 
     @Override
     public void cancelOrder(Long orderId , Long userId) {
+        Order order = new Order();
+        //Yorum satirina aldigimiz kodlari daha temiz hale getirdik.
+        this.orderBusinessRules.checkIfOrderExists(order,orderId);
+        this.orderBusinessRules.checkIfUserAuthorized(order,userId);
+        this.orderBusinessRules.checkIfOrderCanBeCancelled(order,orderId);
+
+        /*
         //Siparis bul
         Order order = this.orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException("Not found order ID"));
@@ -146,6 +158,8 @@ public class OrderManager implements OrderService {
         if (order.getOrderStatus() != OrderStatus.PENDING){
             throw new OrderCancellationException("Order with ID" + orderId + "cannot be cancelled");
         }
+
+         */
         //Siparisin durumunu iptal olarak ayarla.
         order.setOrderStatus(OrderStatus.CANCELED);
         orderRepository.save(order);

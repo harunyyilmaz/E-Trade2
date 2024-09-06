@@ -17,4 +17,5 @@ public interface ProductImageRepository extends JpaRepository<ProductImage,Long>
 
     List<ProductImage> findByUploadDateBetween(LocalDateTime startDate , LocalDateTime endDate);
 
+    Boolean existsByProductId(Long productId);
 }
