@@ -34,6 +34,8 @@ public class ProductImageManager implements ProductImageService {
         //Asagidaki businessrules=Yeni bir ürün resmi eklerken, ürünün geçerli olup olmadığını
         // kontrol etmek için kullanılabi
         this.productImagesBusinessRules.validateAndGetProduct(createProductImageRequest.getProductId());
+        this.productImagesBusinessRules.validateImageSize(createProductImageRequest.getSize());
+        this.productImagesBusinessRules.validateImageDimensions(createProductImageRequest.getWidth(), createProductImageRequest.getHeight());
 
         ProductImage productImage = new ProductImage();
         productImage.setUrl(createProductImageRequest.getUrl());
@@ -76,13 +78,19 @@ public class ProductImageManager implements ProductImageService {
         //Güncelleme isteginin gecerliligini kontrol etmek icin
         this.productImagesBusinessRules.validateUpdateRequest(updateProductImageRequest);
 
-
         ProductImage productImage = this.productImageRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("ProductImage not found"));
-        /*NNNOTTTTTT:
-        productImage.setUrl(updateProductImageRequest.getUrl()); Bu sekilde devam edersek her seferinde tüm alanlari güncellemek gerekecektir.
+
+        this.productImagesBusinessRules.checkIfImageActive(productImage);
+        /*
+        productImage.setUrl(updateProductImageRequest.getUrl());
+        =>Bu sekilde devam edersek her seferinde tüm alanlari güncellemek gerekecektir.
 
          */
+
+        //Eğer updateProductImageRequest.getUrl() null değilse, bu URL değeri productImage.setUrl(url)
+        //metodu aracılığıyla productImage nesnesine atanır.
+        //Eğer null ise, hiçbir şey yapılmaz, yani URL güncellenmez.
         Optional.ofNullable(updateProductImageRequest.getUrl()).ifPresent(productImage::setUrl);
         Optional.ofNullable(updateProductImageRequest.getThumbnailUrl()).ifPresent(productImage::setThumbnailUrl);
         Optional.ofNullable(updateProductImageRequest.getTitle()).ifPresent(productImage::setTitle);
@@ -93,6 +101,7 @@ public class ProductImageManager implements ProductImageService {
         Optional.ofNullable(updateProductImageRequest.getSize()).ifPresent(productImage::setSize);
         Optional.ofNullable(updateProductImageRequest.getFormat()).ifPresent(productImage::setFormat);
         Optional.ofNullable(updateProductImageRequest.getIsActive()).ifPresent(productImage::setIsActive);
+
         Optional.ofNullable(updateProductImageRequest.getProductName()).ifPresent(productName -> {
             Product product = this.productsRepository.findByName(productName)
                     .orElseThrow(() -> new BusinessException("Product not found with name"));
@@ -120,6 +129,7 @@ public class ProductImageManager implements ProductImageService {
 
         ProductImage productImage = this.productImageRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("ProductImage not found with ID" + id));
+
 
         GetByIdProductImageResponse getByIdProductImageResponse = new GetByIdProductImageResponse();
         getByIdProductImageResponse.setId(productImage.getId());

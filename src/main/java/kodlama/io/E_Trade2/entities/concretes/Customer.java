@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -39,6 +40,10 @@ public class Customer extends BaseEntity {
     @JsonIgnore
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Address> addresses;
 
 
 }
