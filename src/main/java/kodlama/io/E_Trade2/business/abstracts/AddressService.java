@@ -18,4 +18,8 @@ public interface AddressService {
     void update(Long customerId, UpdateAddressRequest updateAddressRequest);
 
     void delete(Long id);
+
+    List<GetAllAddressResponse> getByCustomerId(Long customerId);
+
+    List<GetAllAddressResponse> findByCity(String city);
 }

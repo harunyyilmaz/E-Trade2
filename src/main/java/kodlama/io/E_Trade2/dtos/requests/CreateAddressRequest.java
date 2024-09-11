@@ -6,11 +6,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateAddressRequest {
 
+    @NotNull
+    @NotBlank
+    private Long id;
     @NotNull
     @NotBlank
     private String streetAddress;
@@ -26,6 +31,9 @@ public class CreateAddressRequest {
     @NotNull
     @NotBlank
     private String country;
+    @NotNull
+    @NotBlank
+    private LocalDateTime createAt;
     @NotNull
     @NotBlank
     private String customerName;

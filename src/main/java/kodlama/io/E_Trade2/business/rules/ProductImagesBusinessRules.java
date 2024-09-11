@@ -52,7 +52,6 @@ public class ProductImagesBusinessRules {
         }
     }
 
-
     public void checkIfImageActive(ProductImage productImage){
         if (!productImage.getIsActive()){
             throw new BusinessException("Product image is not active");
