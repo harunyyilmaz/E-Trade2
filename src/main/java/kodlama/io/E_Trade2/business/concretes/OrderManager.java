@@ -55,7 +55,7 @@ public class OrderManager implements OrderService {
     @Override
     public GetByIdOrderResponse getById(Long id) {
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Order not found with id: " + id));
+                .orElseThrow(() -> new BusinessException("Order not found with id: "));
 
         GetByIdOrderResponse getByIdOrderResponse = new GetByIdOrderResponse();
         getByIdOrderResponse.setId(order.getId());

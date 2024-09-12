@@ -99,4 +99,14 @@ public class ProductManager implements ProductService {
     public void delete(Long id) {
         this.productsRepository.deleteById(id);
     }
+
+    @Override
+    public List<GetAllProductResponse> getProductsByBrandId(Long brandId) {
+        return List.of();
+    }
+
+    @Override
+    public List<GetAllProductResponse> getProductsByBrandName(String brandName) {
+        return List.of();
+    }
 }
