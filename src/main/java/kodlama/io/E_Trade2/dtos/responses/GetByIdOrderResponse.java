@@ -16,6 +16,7 @@ public class GetByIdOrderResponse {
 
     private Long id;
     private LocalDateTime createAt;
+    private LocalDateTime updateDate;
     private List<OrderItem> orderItems;
     private Long userId;
     private BigDecimal totalPrice;

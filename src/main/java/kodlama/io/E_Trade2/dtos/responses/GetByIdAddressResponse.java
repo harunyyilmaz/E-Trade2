@@ -4,11 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetByIdAddressResponse {
 
+
+    private LocalDateTime createAt;
+    private LocalDateTime updateDate;
     private String streetAddress;
     private String state;
     private String city;

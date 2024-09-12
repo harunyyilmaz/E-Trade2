@@ -9,16 +9,14 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetByIdCustomersResponse {
+public class GetByIdBrandResponse {
 
-    private Long id;
     private LocalDateTime createAt;
     private LocalDateTime updateDate;
-    private String firstName;
-    private String lastName;
-    private String userName;
-    private String email;
-    private int age;
-    private int birthYear;
-
+    private String name;
+    private String description;
+    private String country;
+    private String contactEmail;
+    private String phoneNumber;
+    private Long productId;
 }

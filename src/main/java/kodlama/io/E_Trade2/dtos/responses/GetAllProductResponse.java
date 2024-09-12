@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +15,8 @@ import java.util.Set;
 public class GetAllProductResponse {
 
     private Long id;
+    private LocalDateTime createAt;
+    private LocalDateTime updateDate;
     private String name;
     private String descriptions;
     private double price;

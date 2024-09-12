@@ -114,7 +114,8 @@ public class OrderItemManager implements OrderItemService {
     @Override
     public void updateQuantity(Long orderItemId, int quantity) {
         OrderItem orderItem = this.orderItemRepository.findById(orderItemId)
-                .orElseThrow(()-> new BusinessException("OrderItem not found with ID" + orderItemId));
+                .orElseThrow(()-> new BusinessException("OrderItem not found with ID" ));
+
         orderItem.setQuantity(quantity);
 
         orderItemRepository.save(orderItem);

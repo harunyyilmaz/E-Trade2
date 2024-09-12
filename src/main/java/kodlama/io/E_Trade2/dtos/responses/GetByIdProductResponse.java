@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +14,8 @@ import java.util.Set;
 public class GetByIdProductResponse {
 
     private Long id;
+    private LocalDateTime createAt;
+    private LocalDateTime updateDate;
     private String name;
     private String descriptions;
     private double price;

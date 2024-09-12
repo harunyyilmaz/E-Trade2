@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 public class GetByIdProductImageResponse {
 
     private Long id;
+    private LocalDateTime createAt;
+    private LocalDateTime updateDate;
     private String url;
     private String thumbnailUrl;
     private Long productId;

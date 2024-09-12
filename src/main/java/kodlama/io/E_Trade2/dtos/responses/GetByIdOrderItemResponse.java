@@ -5,12 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetByIdOrderItemResponse {
 
+    private LocalDateTime createAt;
+    private LocalDateTime updateDate;
     private int quantity;
     private BigDecimal unitPrice;
     private String productName;

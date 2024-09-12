@@ -139,17 +139,16 @@ public class OrderManager implements OrderService {
 
     @Override
     public void cancelOrder(Long orderId , Long userId) {
-        Order order = new Order();
-        //Yorum satirina aldigimiz kodlari daha temiz hale getirdik.
-        this.orderBusinessRules.checkIfOrderExists(order,orderId);
-        this.orderBusinessRules.checkIfUserAuthorized(order,userId);
-        this.orderBusinessRules.checkIfOrderCanBeCancelled(order,orderId);
 
-        /*
+
         //Siparis bul
         Order order = this.orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException("Not found order ID"));
 
+        //Yorum satirina aldigimiz kodlari daha temiz hale getirdik.
+        this.orderBusinessRules.checkIfUserAuthorized(order,userId);
+        this.orderBusinessRules.checkIfOrderCanBeCancelled(order,orderId);
+        /*
         //Kullanici dogrulamsi
         if (order.getUser()== null || !order.getUser().getId().equals(userId)){
             throw new OrderNotFoundException("User with ID" + userId + "is not authorized to cancel this order") ;

@@ -15,7 +15,6 @@ import kodlama.io.E_Trade2.entities.concretes.Customer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -111,6 +110,8 @@ public class AddressManager implements AddressService {
         Optional.ofNullable(updateAddressRequest.getPostalCode()).ifPresent(addressToUpdate::setPostalCode);
 
         this.addressRepository.save(addressToUpdate);
+
+
     }
 
     @Override

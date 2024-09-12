@@ -11,25 +11,27 @@ public class AddressBusinessRules {
 
     private AddressRepository addressRepository;
 
-    public void checkIfPostalCodeAddressExists(String postalCode){
-        if (this.addressRepository.existsByPostalCode(postalCode)){
+    public void checkIfPostalCodeAddressExists(String postalCode) {
+        if (this.addressRepository.existsByPostalCode(postalCode)) {
             throw new BusinessException("Street address already exists");
         }
     }
-    public void checkIfAddressExists(Long id){
-        if (!this.addressRepository.existsById(id)){
+
+    public void checkIfAddressExists(Long id) {
+        if (!this.addressRepository.existsById(id)) {
             throw new BusinessException("Address does not exist");
         }
     }
 
-    public void validateCountryAndCity(String country , String city){
+    public void validateCountryAndCity(String country, String city) {
         //Ülkenin veritabanin mevcut olup olmadigini kontrol eder.
-        if (!this.addressRepository.existsByCountry(country)){
+        if (!this.addressRepository.existsByCountry(country)) {
             throw new BusinessException("Country does not exist in the database");
         }
         // sadece şehir adı değil, şehrin ilgili ülkeye ait olup olmadığı da kontrol edilir.
-        if (!this.addressRepository.existsByCityAndCountry(city,country)){
+        if (!this.addressRepository.existsByCityAndCountry(city, country)) {
             throw new BusinessException("City does not exist in the database for country");
         }
     }
+
 }
