@@ -1,5 +1,6 @@
 package kodlama.io.E_Trade2.dtos.responses;
 
+import kodlama.io.E_Trade2.entities.concretes.Brand;
 import kodlama.io.E_Trade2.entities.concretes.Order;
 import lombok.Data;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class GetAllProductResponse {
     private int quantity;
     private Long categoryId;
     private String categoryName;
+    private Brand brand;
     private List<Long> orderId;
     private Set<Long> customerId;
 

@@ -97,7 +97,6 @@ public class ProductImageManager implements ProductImageService {
         Optional.ofNullable(updateProductImageRequest.getAltText()).ifPresent(productImage::setAltText);
         Optional.ofNullable(updateProductImageRequest.getWidth()).ifPresent(productImage::setWidth);
         Optional.ofNullable(updateProductImageRequest.getHeight()).ifPresent(productImage::setHeight);
-        Optional.ofNullable(updateProductImageRequest.getId()).ifPresent(productImage::setId);
         Optional.ofNullable(updateProductImageRequest.getSize()).ifPresent(productImage::setSize);
         Optional.ofNullable(updateProductImageRequest.getFormat()).ifPresent(productImage::setFormat);
         Optional.ofNullable(updateProductImageRequest.getIsActive()).ifPresent(productImage::setIsActive);

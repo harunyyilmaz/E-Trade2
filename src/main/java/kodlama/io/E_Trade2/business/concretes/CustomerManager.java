@@ -8,7 +8,6 @@ import kodlama.io.E_Trade2.dtos.requests.CreateCustomerRequest;
 import kodlama.io.E_Trade2.dtos.requests.UpdateCustomerRequest;
 import kodlama.io.E_Trade2.dtos.responses.GetAllCustomersResponse;
 import kodlama.io.E_Trade2.dtos.responses.GetByIdCustomersResponse;
-import kodlama.io.E_Trade2.dtos.responses.GetByIdProductResponse;
 import kodlama.io.E_Trade2.entities.concretes.Customer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

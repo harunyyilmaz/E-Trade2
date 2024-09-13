@@ -21,7 +21,7 @@ public interface BrandService {
 
     void delete(Long id);
 
-    void addProductToBrand(Long brandId, CreateBrandRequest createBrandRequest);
+    void updateProductToBrand(Long productId, UpdateBrandRequest updateBrandRequest);
 
     void removeProductFromBrand(Long brandId, Long productId);
 

@@ -26,8 +26,7 @@ public class CreateBrandRequest {
     private String contactEmail;
     @NotBlank
     private String phoneNumber;
-    @NotNull
-    private Long productId;
+
 
 
 

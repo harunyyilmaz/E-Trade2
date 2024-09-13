@@ -25,6 +25,5 @@ public class UpdateBrandRequest {
     private String country;
     @NotBlank
     private String phoneNumber;
-    @NotNull
-    private Long productId;
+
 }
