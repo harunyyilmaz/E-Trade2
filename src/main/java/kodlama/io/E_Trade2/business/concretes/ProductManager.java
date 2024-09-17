@@ -5,19 +5,21 @@ import kodlama.io.E_Trade2.business.rules.ProductBusinessRules;
 import kodlama.io.E_Trade2.core.utilities.exceptions.BusinessException;
 import kodlama.io.E_Trade2.core.utilities.mappers.ModelMapperService;
 import kodlama.io.E_Trade2.dataBase.abstracts.CategoriesRepository;
+import kodlama.io.E_Trade2.dataBase.abstracts.CustomersRepository;
 import kodlama.io.E_Trade2.dataBase.abstracts.ProductsRepository;
 import kodlama.io.E_Trade2.dtos.requests.CreateProductRequest;
+import kodlama.io.E_Trade2.dtos.requests.UpdateProductFavoriteRequest;
 import kodlama.io.E_Trade2.dtos.requests.UpdateProductRequest;
 import kodlama.io.E_Trade2.dtos.responses.GetAllProductResponse;
 import kodlama.io.E_Trade2.dtos.responses.GetByIdProductResponse;
 import kodlama.io.E_Trade2.entities.concretes.Category;
+import kodlama.io.E_Trade2.entities.concretes.Customer;
 import kodlama.io.E_Trade2.entities.concretes.Product;
+import kodlama.io.E_Trade2.entities.concretes.ProductFavorite;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +29,7 @@ public class ProductManager implements ProductService {
     private ModelMapperService modelMapperService;
     private ProductBusinessRules productBusinessRules;
     private CategoriesRepository categoriesRepository;
+    private CustomersRepository customersRepository;
 
     @Override
     public Set<GetAllProductResponse> getAll() {
@@ -109,4 +112,5 @@ public class ProductManager implements ProductService {
     public List<GetAllProductResponse> getProductsByBrandName(String brandName) {
         return List.of();
     }
+
 }

@@ -8,9 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "customers")
@@ -35,6 +33,8 @@ public class Customer extends BaseEntity {
     @Column(name = "birthYear")
     private int birthYear;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    private List<ProductFavorite> productFavorites;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore

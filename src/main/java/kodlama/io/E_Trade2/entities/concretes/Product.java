@@ -44,4 +44,7 @@ public class Product extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "brand_id")
     private Brand brand;
+
+    @OneToMany(mappedBy = "product" , fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+    private List<ProductFavorite> productFavorites;
 }

@@ -51,7 +51,7 @@ public class ProductImagesController {
         return this.productImageService.getProductImagesByProductId(productId);
     }
 
-    @GetMapping("activeProductImages")
+    @GetMapping("/activeProductImages")
     public List<ProductImage> getAllActiveProductImages(){
             return this.productImageService.getAllActiveProductImages();
         }

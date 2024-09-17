@@ -2,13 +2,17 @@ package kodlama.io.E_Trade2.business.concretes;
 
 import kodlama.io.E_Trade2.business.abstracts.CustomerService;
 import kodlama.io.E_Trade2.business.rules.CustomerBusinessRules;
+import kodlama.io.E_Trade2.core.utilities.exceptions.BusinessException;
 import kodlama.io.E_Trade2.core.utilities.mappers.ModelMapperService;
 import kodlama.io.E_Trade2.dataBase.abstracts.CustomersRepository;
+import kodlama.io.E_Trade2.dataBase.abstracts.ProductsRepository;
 import kodlama.io.E_Trade2.dtos.requests.CreateCustomerRequest;
 import kodlama.io.E_Trade2.dtos.requests.UpdateCustomerRequest;
 import kodlama.io.E_Trade2.dtos.responses.GetAllCustomersResponse;
 import kodlama.io.E_Trade2.dtos.responses.GetByIdCustomersResponse;
 import kodlama.io.E_Trade2.entities.concretes.Customer;
+import kodlama.io.E_Trade2.entities.concretes.Product;
+import kodlama.io.E_Trade2.entities.concretes.ProductFavorite;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +27,7 @@ public class CustomerManager implements CustomerService {
     private CustomersRepository customersRepository;
     private ModelMapperService modelMapperService;
     private CustomerBusinessRules customerBusinessRules;
+    private ProductsRepository productsRepository;
 
     @Override
     public Set<GetAllCustomersResponse> getAll() {
@@ -60,5 +65,26 @@ public class CustomerManager implements CustomerService {
     @Override
     public void delete(Long id) {
         this.customersRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateFavoriteProducts(Long customerId, List<Long> productsIds) {
+        //Müsteri ve ürünler yüklendi.
+        Customer customer = this.customersRepository.findById(customerId)
+                .orElseThrow(() -> new BusinessException("Customer not found with ID"));
+
+        List<Product> products = this.productsRepository.findAllById(productsIds);
+
+        //ID ye göre getirdigimiz müsterinin mevcut favorilerini temizledik.
+        customer.getProductFavorites().clear();
+
+        //Müsterinin favori ürünlerini güncelle
+        for (Product product : products) {
+            ProductFavorite productFavorite = new ProductFavorite();
+            productFavorite.setCustomer(customer);
+            productFavorite.setProduct(product);
+            customer.getProductFavorites().add(productFavorite);
+        }
+        this.customersRepository.save(customer);
     }
 }

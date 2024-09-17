@@ -154,6 +154,7 @@ public class BrandManager implements BrandService {
                 .orElseThrow(() -> new BusinessException("Brand not found with id" + brandId));
 
         List<Product> products = brand.getProducts();
+
         List<GetAllProductResponse> getAllProductResponses = products.stream()
                 .map(product -> {
                     GetAllProductResponse getAllProductResponse = new GetAllProductResponse();

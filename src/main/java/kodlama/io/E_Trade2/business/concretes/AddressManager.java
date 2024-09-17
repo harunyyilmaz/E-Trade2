@@ -95,7 +95,6 @@ public class AddressManager implements AddressService {
 
         List<Address> addresses = customer.getAddresses();
 
-
         //3. Eğer adres listesi boşsa, yeni bir Address oluştur
         Address addressToUpdate = addresses.isEmpty() ? new Address() : addresses.getFirst();
 
@@ -109,8 +108,6 @@ public class AddressManager implements AddressService {
         Optional.ofNullable(updateAddressRequest.getPostalCode()).ifPresent(addressToUpdate::setPostalCode);
 
         this.addressRepository.save(addressToUpdate);
-
-
     }
 
     @Override
