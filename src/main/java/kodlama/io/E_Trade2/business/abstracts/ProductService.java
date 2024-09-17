@@ -1,11 +1,9 @@
 package kodlama.io.E_Trade2.business.abstracts;
 
 import kodlama.io.E_Trade2.dtos.requests.CreateProductRequest;
-import kodlama.io.E_Trade2.dtos.requests.UpdateProductFavoriteRequest;
 import kodlama.io.E_Trade2.dtos.requests.UpdateProductRequest;
 import kodlama.io.E_Trade2.dtos.responses.GetAllProductResponse;
 import kodlama.io.E_Trade2.dtos.responses.GetByIdProductResponse;
-import kodlama.io.E_Trade2.entities.concretes.Product;
 
 import java.util.List;
 import java.util.Set;

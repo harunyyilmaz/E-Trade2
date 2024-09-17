@@ -1,16 +1,16 @@
 package kodlama.io.E_Trade2.business.concretes;
 
 import jakarta.persistence.EntityNotFoundException;
-import kodlama.io.E_Trade2.business.abstracts.ProductFavoriteService;
+import kodlama.io.E_Trade2.business.abstracts.FavoriteProductService;
 import kodlama.io.E_Trade2.core.utilities.exceptions.BusinessException;
 import kodlama.io.E_Trade2.core.utilities.mappers.ModelMapperService;
 import kodlama.io.E_Trade2.dataBase.abstracts.CustomersRepository;
 import kodlama.io.E_Trade2.dataBase.abstracts.ProductFavoriteRepository;
 import kodlama.io.E_Trade2.dataBase.abstracts.ProductsRepository;
-import kodlama.io.E_Trade2.dtos.requests.CreateProductFavoriteRequest;
-import kodlama.io.E_Trade2.dtos.requests.UpdateProductFavoriteRequest;
-import kodlama.io.E_Trade2.dtos.responses.GetAllProductFavoriteResponse;
-import kodlama.io.E_Trade2.dtos.responses.GetByIdProductFavoriteResponse;
+import kodlama.io.E_Trade2.dtos.requests.CreateFavoriteProductRequest;
+import kodlama.io.E_Trade2.dtos.requests.UpdateFavoriteProductRequest;
+import kodlama.io.E_Trade2.dtos.responses.GetAllFavoriteProductResponse;
+import kodlama.io.E_Trade2.dtos.responses.GetByIdFavoriteProductResponse;
 import kodlama.io.E_Trade2.entities.concretes.Customer;
 import kodlama.io.E_Trade2.entities.concretes.Product;
 import kodlama.io.E_Trade2.entities.concretes.FavoriteProduct;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class ProductFavoriteManager implements ProductFavoriteService {
+public class FavoriteProductManager implements FavoriteProductService {
 
     private ProductFavoriteRepository productFavoriteRepository;
     private CustomersRepository customersRepository;
@@ -30,11 +30,11 @@ public class ProductFavoriteManager implements ProductFavoriteService {
     private ModelMapperService modelMapperService;
 
     @Override
-    public List<GetAllProductFavoriteResponse> getAll() {
+    public List<GetAllFavoriteProductResponse> getAll() {
         List<FavoriteProduct> productFavorites = this.productFavoriteRepository.findAll();
-        List<GetAllProductFavoriteResponse> getAllProductFavoriteResponses = productFavorites.stream()
+        List<GetAllFavoriteProductResponse> getAllProductFavoriteResponses = productFavorites.stream()
                 .map(productFavorite -> {
-                    GetAllProductFavoriteResponse response = new GetAllProductFavoriteResponse();
+                    GetAllFavoriteProductResponse response = new GetAllFavoriteProductResponse();
                     response.setId(productFavorite.getId());
                     response.setProductName(productFavorite.getProduct().getName());
                     response.setCustomerId(productFavorite.getCustomer().getId());
@@ -45,41 +45,41 @@ public class ProductFavoriteManager implements ProductFavoriteService {
     }
 
     @Override
-    public List<GetAllProductFavoriteResponse> getAllCustomerById(Long customerId) {
+    public List<GetAllFavoriteProductResponse> getAllCustomerById(Long customerId) {
         Customer customer = this.customersRepository.findById(customerId)
                 .orElseThrow(() -> new BusinessException("Customer not found with id"));
 
         List<FavoriteProduct> productFavorites = this.productFavoriteRepository.findByCustomerId(customerId);
 
-        List<GetAllProductFavoriteResponse> responses = productFavorites.stream()
+        List<GetAllFavoriteProductResponse> responses = productFavorites.stream()
                 .map(productFavorite -> this.modelMapperService.forResponse()
-                        .map(productFavorite, GetAllProductFavoriteResponse.class))
+                        .map(productFavorite, GetAllFavoriteProductResponse.class))
                 .collect(Collectors.toList());
         return responses;
     }
 
     @Override
-    public GetByIdProductFavoriteResponse getById(Long id) {
+    public GetByIdFavoriteProductResponse getById(Long id) {
 
         FavoriteProduct favoriteProduct = this.productFavoriteRepository.findById(id).orElseThrow();
 
-        GetByIdProductFavoriteResponse getByIdProductFavoriteResponse = new GetByIdProductFavoriteResponse();
-        getByIdProductFavoriteResponse.setProductId(favoriteProduct.getId());
-        getByIdProductFavoriteResponse.setCustomerName(favoriteProduct.getCustomer().getFirstName());
-        getByIdProductFavoriteResponse.setCustomerId(favoriteProduct.getCustomer().getId());
-        getByIdProductFavoriteResponse.setProductName(favoriteProduct.getProduct().getName());
-        getByIdProductFavoriteResponse.setProductId(favoriteProduct.getProduct().getId());
+        GetByIdFavoriteProductResponse getByIdFavoriteProductResponse = new GetByIdFavoriteProductResponse();
+        getByIdFavoriteProductResponse.setProductId(favoriteProduct.getId());
+        getByIdFavoriteProductResponse.setCustomerName(favoriteProduct.getCustomer().getFirstName());
+        getByIdFavoriteProductResponse.setCustomerId(favoriteProduct.getCustomer().getId());
+        getByIdFavoriteProductResponse.setProductName(favoriteProduct.getProduct().getName());
+        getByIdFavoriteProductResponse.setProductId(favoriteProduct.getProduct().getId());
 
-        return getByIdProductFavoriteResponse;
+        return getByIdFavoriteProductResponse;
     }
 
     @Override
-    public void add(CreateProductFavoriteRequest createProductFavoriteRequest) {
+    public void add(CreateFavoriteProductRequest createFavoriteProductRequest) {
 
-        Product product = this.productsRepository.findById(createProductFavoriteRequest.getProductId())
+        Product product = this.productsRepository.findById(createFavoriteProductRequest.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with id"));
 
-        Customer customer = this.customersRepository.findById(createProductFavoriteRequest.getCustomerId())
+        Customer customer = this.customersRepository.findById(createFavoriteProductRequest.getCustomerId())
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found with id"));
 
         FavoriteProduct favoriteProduct = new FavoriteProduct();
@@ -92,12 +92,12 @@ public class ProductFavoriteManager implements ProductFavoriteService {
 
 
     @Override
-    public void update(UpdateProductFavoriteRequest updateProductFavoriteRequest) {
+    public void update(UpdateFavoriteProductRequest updateFavoriteProductRequest) {
 
-        Product product = this.productsRepository.findById(updateProductFavoriteRequest.getCustomerId())
+        Product product = this.productsRepository.findById(updateFavoriteProductRequest.getCustomerId())
                 .orElseThrow(() -> new EntityNotFoundException("product not found with id"));
 
-        Customer customer = this.customersRepository.findById(updateProductFavoriteRequest.getCustomerId())
+        Customer customer = this.customersRepository.findById(updateFavoriteProductRequest.getCustomerId())
                 .orElseThrow(() -> new EntityNotFoundException("customer not found with id"));
 
         FavoriteProduct favoriteProduct = new FavoriteProduct();

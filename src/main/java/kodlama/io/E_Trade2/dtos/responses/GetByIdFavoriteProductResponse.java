@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetByIdProductFavoriteResponse {
+public class GetByIdFavoriteProductResponse {
 
     private Long productId;
     private Long customerId;

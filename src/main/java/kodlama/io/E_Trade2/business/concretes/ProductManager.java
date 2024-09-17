@@ -8,18 +8,17 @@ import kodlama.io.E_Trade2.dataBase.abstracts.CategoriesRepository;
 import kodlama.io.E_Trade2.dataBase.abstracts.CustomersRepository;
 import kodlama.io.E_Trade2.dataBase.abstracts.ProductsRepository;
 import kodlama.io.E_Trade2.dtos.requests.CreateProductRequest;
-import kodlama.io.E_Trade2.dtos.requests.UpdateProductFavoriteRequest;
 import kodlama.io.E_Trade2.dtos.requests.UpdateProductRequest;
 import kodlama.io.E_Trade2.dtos.responses.GetAllProductResponse;
 import kodlama.io.E_Trade2.dtos.responses.GetByIdProductResponse;
 import kodlama.io.E_Trade2.entities.concretes.Category;
-import kodlama.io.E_Trade2.entities.concretes.Customer;
 import kodlama.io.E_Trade2.entities.concretes.Product;
-import kodlama.io.E_Trade2.entities.concretes.FavoriteProduct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
