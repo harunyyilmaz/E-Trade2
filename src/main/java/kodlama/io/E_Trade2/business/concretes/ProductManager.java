@@ -15,7 +15,7 @@ import kodlama.io.E_Trade2.dtos.responses.GetByIdProductResponse;
 import kodlama.io.E_Trade2.entities.concretes.Category;
 import kodlama.io.E_Trade2.entities.concretes.Customer;
 import kodlama.io.E_Trade2.entities.concretes.Product;
-import kodlama.io.E_Trade2.entities.concretes.ProductFavorite;
+import kodlama.io.E_Trade2.entities.concretes.FavoriteProduct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -34,7 +34,7 @@ public class Customer extends BaseEntity {
     private int birthYear;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    private List<ProductFavorite> productFavorites;
+    private List<FavoriteProduct> productFavorites;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore

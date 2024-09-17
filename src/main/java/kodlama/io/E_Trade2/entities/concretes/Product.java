@@ -46,5 +46,5 @@ public class Product extends BaseEntity {
     private Brand brand;
 
     @OneToMany(mappedBy = "product" , fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
-    private List<ProductFavorite> productFavorites;
+    private List<FavoriteProduct> productFavorites;
 }

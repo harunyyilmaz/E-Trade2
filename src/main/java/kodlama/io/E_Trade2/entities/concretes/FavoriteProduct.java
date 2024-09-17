@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductFavorite extends BaseEntity {
+public class FavoriteProduct extends BaseEntity {
 
     @JoinColumn(name = "customer")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

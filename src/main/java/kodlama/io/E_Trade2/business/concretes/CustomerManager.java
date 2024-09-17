@@ -12,7 +12,7 @@ import kodlama.io.E_Trade2.dtos.responses.GetAllCustomersResponse;
 import kodlama.io.E_Trade2.dtos.responses.GetByIdCustomersResponse;
 import kodlama.io.E_Trade2.entities.concretes.Customer;
 import kodlama.io.E_Trade2.entities.concretes.Product;
-import kodlama.io.E_Trade2.entities.concretes.ProductFavorite;
+import kodlama.io.E_Trade2.entities.concretes.FavoriteProduct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -80,10 +80,10 @@ public class CustomerManager implements CustomerService {
 
         //Müsterinin favori ürünlerini güncelle
         for (Product product : products) {
-            ProductFavorite productFavorite = new ProductFavorite();
-            productFavorite.setCustomer(customer);
-            productFavorite.setProduct(product);
-            customer.getProductFavorites().add(productFavorite);
+            FavoriteProduct favoriteProduct = new FavoriteProduct();
+            favoriteProduct.setCustomer(customer);
+            favoriteProduct.setProduct(product);
+            customer.getProductFavorites().add(favoriteProduct);
         }
         this.customersRepository.save(customer);
     }
