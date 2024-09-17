@@ -5,7 +5,7 @@ import kodlama.io.E_Trade2.business.abstracts.FavoriteProductService;
 import kodlama.io.E_Trade2.core.utilities.exceptions.BusinessException;
 import kodlama.io.E_Trade2.core.utilities.mappers.ModelMapperService;
 import kodlama.io.E_Trade2.dataBase.abstracts.CustomersRepository;
-import kodlama.io.E_Trade2.dataBase.abstracts.ProductFavoriteRepository;
+import kodlama.io.E_Trade2.dataBase.abstracts.FavoriteProductRepository;
 import kodlama.io.E_Trade2.dataBase.abstracts.ProductsRepository;
 import kodlama.io.E_Trade2.dtos.requests.CreateFavoriteProductRequest;
 import kodlama.io.E_Trade2.dtos.requests.UpdateFavoriteProductRequest;
@@ -24,14 +24,14 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class FavoriteProductManager implements FavoriteProductService {
 
-    private ProductFavoriteRepository productFavoriteRepository;
+    private FavoriteProductRepository favoriteProductRepository;
     private CustomersRepository customersRepository;
     private ProductsRepository productsRepository;
     private ModelMapperService modelMapperService;
 
     @Override
     public List<GetAllFavoriteProductResponse> getAll() {
-        List<FavoriteProduct> productFavorites = this.productFavoriteRepository.findAll();
+        List<FavoriteProduct> productFavorites = this.favoriteProductRepository.findAll();
         List<GetAllFavoriteProductResponse> getAllProductFavoriteResponses = productFavorites.stream()
                 .map(productFavorite -> {
                     GetAllFavoriteProductResponse response = new GetAllFavoriteProductResponse();
@@ -43,13 +43,12 @@ public class FavoriteProductManager implements FavoriteProductService {
                 }).collect(Collectors.toList());
         return getAllProductFavoriteResponses;
     }
-
     @Override
     public List<GetAllFavoriteProductResponse> getAllCustomerById(Long customerId) {
         Customer customer = this.customersRepository.findById(customerId)
                 .orElseThrow(() -> new BusinessException("Customer not found with id"));
 
-        List<FavoriteProduct> productFavorites = this.productFavoriteRepository.findByCustomerId(customerId);
+        List<FavoriteProduct> productFavorites = this.favoriteProductRepository.findByCustomerId(customerId);
 
         List<GetAllFavoriteProductResponse> responses = productFavorites.stream()
                 .map(productFavorite -> this.modelMapperService.forResponse()
@@ -61,7 +60,7 @@ public class FavoriteProductManager implements FavoriteProductService {
     @Override
     public GetByIdFavoriteProductResponse getById(Long id) {
 
-        FavoriteProduct favoriteProduct = this.productFavoriteRepository.findById(id).orElseThrow();
+        FavoriteProduct favoriteProduct = this.favoriteProductRepository.findById(id).orElseThrow();
 
         GetByIdFavoriteProductResponse getByIdFavoriteProductResponse = new GetByIdFavoriteProductResponse();
         getByIdFavoriteProductResponse.setProductId(favoriteProduct.getId());
@@ -86,7 +85,7 @@ public class FavoriteProductManager implements FavoriteProductService {
         favoriteProduct.setProduct(product);
         favoriteProduct.setCustomer(customer);
 
-        this.productFavoriteRepository.save(favoriteProduct);
+        this.favoriteProductRepository.save(favoriteProduct);
 
     }
 
@@ -104,12 +103,12 @@ public class FavoriteProductManager implements FavoriteProductService {
         favoriteProduct.setCustomer(customer);
         favoriteProduct.setProduct(product);
 
-        this.productFavoriteRepository.save(favoriteProduct);
+        this.favoriteProductRepository.save(favoriteProduct);
 
     }
 
     @Override
     public void delete(Long id) {
-        this.productFavoriteRepository.deleteById(id);
+        this.favoriteProductRepository.deleteById(id);
     }
 }

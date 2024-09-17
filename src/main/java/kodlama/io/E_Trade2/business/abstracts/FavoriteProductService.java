@@ -10,10 +10,16 @@ import java.util.List;
 
 public interface FavoriteProductService {
 
+
     List<GetAllFavoriteProductResponse> getAll();
+
     List<GetAllFavoriteProductResponse> getAllCustomerById(Long customerId);
+
     GetByIdFavoriteProductResponse getById(Long id);
+
     void add(CreateFavoriteProductRequest createFavoriteProductRequest);
+
     void update(UpdateFavoriteProductRequest updateFavoriteProductRequest);
+
     void delete(Long id);
 }

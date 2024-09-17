@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateFavoriteProductRequest {
 
+
     @NotNull
     private Long customerId;
     @NotNull

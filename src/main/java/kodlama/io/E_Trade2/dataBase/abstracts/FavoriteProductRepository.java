@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ProductFavoriteRepository extends JpaRepository<FavoriteProduct,Long>{
+public interface FavoriteProductRepository extends JpaRepository<FavoriteProduct,Long>{
 
     List<FavoriteProduct> findByCustomerId(Long customerId);
 }

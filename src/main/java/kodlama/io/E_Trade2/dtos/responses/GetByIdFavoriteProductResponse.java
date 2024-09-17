@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetByIdFavoriteProductResponse {
 
+
     private Long productId;
     private Long customerId;
     private String customerName;

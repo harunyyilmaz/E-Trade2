@@ -15,6 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FavoriteProduct extends BaseEntity {
 
+
     @JoinColumn(name = "customer")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Customer customer;

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetAllFavoriteProductResponse {
 
+
     private Long id;
     private Long customerId;
     private String customerName;
