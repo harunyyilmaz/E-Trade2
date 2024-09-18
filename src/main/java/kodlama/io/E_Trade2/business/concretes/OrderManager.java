@@ -54,8 +54,12 @@ public class OrderManager implements OrderService {
 
     @Override
     public GetByIdOrderResponse getById(Long id) {
+
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Order not found with id: "));
+
+        // yukaridaki metodun temiz hali
+        // this.orderBusinessRules.checkIfOrderExists(id);
 
         GetByIdOrderResponse getByIdOrderResponse = new GetByIdOrderResponse();
         getByIdOrderResponse.setId(order.getId());
@@ -108,7 +112,14 @@ public class OrderManager implements OrderService {
 
     @Override
     public void update(UpdateOrderRequest updateOrderRequest) {
-        Order order = new Order();
+
+        // Mevcut siparişi veritabanından al
+        Order order = this.orderRepository.findById(updateOrderRequest.getId())
+                .orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + updateOrderRequest.getId()));
+
+        //Siparisi bul rules sinfinda yukaridaki ile ayni islev
+       // this.orderBusinessRules.checkIfOrderExists(updateOrderRequest.getId());
+
         order.setOrderNumber(updateOrderRequest.getOrderNumber());
         order.setShippingMethod(updateOrderRequest.getShippingMethod());
         order.setNotes(updateOrderRequest.getNotes());
@@ -129,11 +140,14 @@ public class OrderManager implements OrderService {
                 }).collect(Collectors.toList());
         order.setOrderItems(updateOrderItems);
 
+
+
         orderRepository.save(order);
     }
 
     @Override
     public void delete(Long id) {
+        this.orderBusinessRules.checkIfOrderExists(id);
         this.orderRepository.deleteById(id);
     }
 

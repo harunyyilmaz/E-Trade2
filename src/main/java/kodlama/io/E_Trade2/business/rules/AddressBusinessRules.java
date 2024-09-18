@@ -25,13 +25,22 @@ public class AddressBusinessRules {
 
     public void validateCountryAndCity(String country, String city) {
         //Ülkenin veritabanin mevcut olup olmadigini kontrol eder.
-        if (!this.addressRepository.existsByCountry(country)) {
+        if (this.addressRepository.existsByCountry(country)) {
             throw new BusinessException("Country does not exist in the database");
         }
         // sadece şehir adı değil, şehrin ilgili ülkeye ait olup olmadığı da kontrol edilir.
-        if (!this.addressRepository.existsByCityAndCountry(city, country)) {
+        if (this.addressRepository.existsByCityAndCountry(city, country)) {
             throw new BusinessException("City does not exist in the database for country");
         }
     }
+    /*
+    validateCountryAndCity: Eğer bu metodun amacı, verilen ülke ve şehrin geçerliliğini kontrol etmekse
+    (yani, bir işlem gerçekleştirilmeden önce bu değerlerin doğruluğunu sağlamaksa), validate kullanmak
+    daha uygun olur.
+
+checkIfCountryAndCityExist: Eğer bu metod, sadece ülkenin ve şehrin var olup olmadığını
+ kontrol ediyorsa ve bu kontrol, başka bir işlem için bir ön koşul değilse, checkIf kullanmak
+  daha anlamlı olabilir.
+     */
 
 }

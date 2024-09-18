@@ -26,11 +26,10 @@ public class OrderBusinessRules {
             throw new BusinessException("Order number already exists");
         }
     }
-
-    //Siparisi bul
-    public void checkIfOrderExists(Order order, Long orderId) {
-        if (order.getId() == null) {
-            throw new OrderNotFoundException("Not found Order ID" + orderId);
+    //Siparisi bul.
+    public void checkIfOrderExists(Long orderId) {
+        if (!this.orderRepository.existsById(orderId)) {
+            throw new OrderNotFoundException("Not found Order ID " + orderId);
         }
     }
 

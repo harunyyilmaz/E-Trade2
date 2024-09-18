@@ -9,5 +9,7 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 
     Optional<Order> findByOrderNumber(int number);
 
-    Boolean existsByOrderNumber(int orderNumber); //Özel jpa keyword'ler dir.
+    Boolean existsByOrderNumber(int orderNumber);//Özel jpa keyword'ler dir.
+
+    boolean existsById(Long orderId);
 }

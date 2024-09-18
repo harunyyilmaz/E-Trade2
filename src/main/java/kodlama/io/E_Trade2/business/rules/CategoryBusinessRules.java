@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 public class CategoryBusinessRules {
     private CategoriesRepository categoriesRepository;
 
-    public void checkIfCategoryNameExists(String name){
-        if (this.categoriesRepository.existsByName(name)){
-            throw  new BusinessException("Category name already exists");
+    public void checkIfCategoryNameExists(String name) {
+        if (this.categoriesRepository.existsByName(name)) {
+            throw new BusinessException("Category name already exists");
         }
     }
 }

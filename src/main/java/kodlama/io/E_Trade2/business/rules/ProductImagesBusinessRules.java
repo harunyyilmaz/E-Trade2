@@ -19,21 +19,21 @@ public class ProductImagesBusinessRules {
 
     // productId'ye ait bir resim olup olmadığını kontrol eder.
     //Eğer resim varsa, bir BusinessException fırlatarak işlem durdurulur.
-    public void checkIfProductImagesIdExists(Long productId){
-        if (productImageRepository.existsByProductId(productId)){
+    public void checkIfProductImagesIdExists(Long productId) {
+        if (productImageRepository.existsByProductId(productId)) {
             throw new BusinessException("This product already has an associated image");
         }
     }
 
     // Ürün ID'sini doğrular ve varsa ürünü döndürür, aksi takdirde iş kuralları hatası fırlatır.
-    public Product validateAndGetProduct(Long productId) {
-        return productsRepository.findById(productId)
+    public void validateAndGetProduct(Long productId) {
+         this.productsRepository.findById(productId)
                 .orElseThrow(() -> new BusinessException("Product not found with ID "));
     }
 
     // Ürün adını doğrular ve varsa ürünü döndürür, aksi takdirde iş kuralları hatası fırlatır.
-    public Product validateAndGetProductByName(String productName) {
-        return productsRepository.findByName(productName)
+    public void validateAndGetProductByName(String productName) {
+        productsRepository.findByName(productName)
                 .orElseThrow(() -> new BusinessException("Product not found with name "));
     }
 
@@ -45,22 +45,22 @@ public class ProductImagesBusinessRules {
     }
 
     //Resim boyutu
-    public void validateImageSize(Long size){
-        Long maxSize = 5*1024*1024L;
-        if (size>maxSize){
+    public void validateImageSize(Long size) {
+        Long maxSize = 5 * 1024 * 1024L;
+        if (size > maxSize) {
             throw new BusinessException("Image size exceeds the maximum allowed size of 5MB");
         }
     }
 
-    public void checkIfImageActive(ProductImage productImage){
-        if (!productImage.getIsActive()){
+    public void checkIfImageActive(ProductImage productImage) {
+        if (!productImage.getIsActive()) {
             throw new BusinessException("Product image is not active");
         }
     }
 
     //Görselin genislik ve yükseklik degerlerini dogrulama
-    public void validateImageDimensions(Integer width, Integer height){
-        if (width<=0 || height<=0){
+    public void validateImageDimensions(Integer width, Integer height) {
+        if (width <= 0 || height <= 0) {
             throw new BusinessException("Image dimensions must be positive");
         }
     }
