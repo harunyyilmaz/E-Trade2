@@ -3,6 +3,7 @@ package kodlama.io.E_Trade2.entities.concretes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import kodlama.io.E_Trade2.base.BaseEntity;
+import kodlama.io.E_Trade2.enums.BrandStatus;
 import kodlama.io.E_Trade2.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,8 +36,8 @@ public class Brand extends BaseEntity {
     private String phoneNumber;
 
     @Enumerated( EnumType.STRING)
-    @Column(name = "orderStatus" , nullable = false)
-    private OrderStatus orderStatus;
+    @Column(name = "brandStatus" , nullable = false)
+    private BrandStatus brandStatus;
 
     @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Product> products;

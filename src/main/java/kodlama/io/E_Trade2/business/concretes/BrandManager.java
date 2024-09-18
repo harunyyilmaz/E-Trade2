@@ -1,6 +1,7 @@
 package kodlama.io.E_Trade2.business.concretes;
 
 import kodlama.io.E_Trade2.business.abstracts.BrandService;
+import kodlama.io.E_Trade2.business.rules.BrandBusinessRules;
 import kodlama.io.E_Trade2.core.utilities.exceptions.BusinessException;
 import kodlama.io.E_Trade2.core.utilities.mappers.ModelMapperService;
 import kodlama.io.E_Trade2.dataBase.abstracts.BrandRepository;
@@ -28,6 +29,7 @@ public class BrandManager implements BrandService {
     private BrandRepository brandRepository;
     private ModelMapperService modelMapperService;
     private ProductsRepository productsRepository;
+    private BrandBusinessRules brandBusinessRules;
 
     @Override
     public Set<GetAllBrandsResponse> getAll() {
@@ -79,6 +81,10 @@ public class BrandManager implements BrandService {
     @Override
     public void add(CreateBrandRequest createBrandRequest) {
 
+        this.brandBusinessRules.checkIfBrandNameExists(createBrandRequest.getName());
+        this.brandBusinessRules.checkIfPhoneNumberIsValid(createBrandRequest.getPhoneNumber());
+
+
         Brand brand = new Brand();
         brand.setName(createBrandRequest.getName());
         brand.setCountry(createBrandRequest.getCountry());
@@ -94,6 +100,13 @@ public class BrandManager implements BrandService {
         Brand brand = this.brandRepository.findById(updateBrandRequest.getId())
                 .orElseThrow(() -> new BusinessException("Brand not found with id"));
 
+        //Güncelleme esnasinda isteginin gecerli olup olmadigini kontrol et
+        this.brandBusinessRules.validateUpdateRequest(updateBrandRequest);
+
+        this.brandBusinessRules.checkIfPhoneNumberIsValid(updateBrandRequest.getPhoneNumber());
+
+        //Markaniin varligini kontrol et.
+        this.brandBusinessRules.checkIfBrandExists(updateBrandRequest.getId());
 
         Optional.ofNullable(updateBrandRequest.getName()).ifPresent(brand::setName);
         Optional.ofNullable(updateBrandRequest.getDescription()).ifPresent(brand::setDescription);
@@ -107,12 +120,17 @@ public class BrandManager implements BrandService {
     @Override
     public void delete(Long id) {
 
+        this.brandBusinessRules.checkIfBrandExists(id);
         this.brandRepository.deleteById(id);
 
     }
 
     @Override
     public void updateProductToBrand(Long productId, UpdateBrandRequest updateBrandRequest) {
+
+        this.brandBusinessRules.checkIfBrandExists(updateBrandRequest.getId());
+
+        this.brandBusinessRules.checkIfPhoneNumberIsValid(updateBrandRequest.getPhoneNumber());
 
         Product product = this.productsRepository.findById(productId)
                 .orElseThrow(() -> new BusinessException("Product not found with id" + productId));
@@ -128,6 +146,8 @@ public class BrandManager implements BrandService {
 
     @Override
     public void removeProductFromBrand(Long brandId, Long productId) {
+        this.brandBusinessRules.checkIfBrandExists(brandId);
+
         Product product = this.productsRepository.findById(productId)
                 .orElseThrow(() -> new BusinessException("Product not found with id"));
 
