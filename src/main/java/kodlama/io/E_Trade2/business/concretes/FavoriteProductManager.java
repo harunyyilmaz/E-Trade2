@@ -2,6 +2,7 @@ package kodlama.io.E_Trade2.business.concretes;
 
 import jakarta.persistence.EntityNotFoundException;
 import kodlama.io.E_Trade2.business.abstracts.FavoriteProductService;
+import kodlama.io.E_Trade2.business.rules.FavoriteProductBusinessRules;
 import kodlama.io.E_Trade2.core.utilities.exceptions.BusinessException;
 import kodlama.io.E_Trade2.core.utilities.mappers.ModelMapperService;
 import kodlama.io.E_Trade2.dataBase.abstracts.CustomersRepository;
@@ -28,6 +29,7 @@ public class FavoriteProductManager implements FavoriteProductService {
     private CustomersRepository customersRepository;
     private ProductsRepository productsRepository;
     private ModelMapperService modelMapperService;
+    private FavoriteProductBusinessRules favoriteProductBusinessRules;
 
     @Override
     public List<GetAllFavoriteProductResponse> getAll() {
@@ -75,6 +77,12 @@ public class FavoriteProductManager implements FavoriteProductService {
     @Override
     public void add(CreateFavoriteProductRequest createFavoriteProductRequest) {
 
+        //Ürün  zaten favorilere eklenmis mi.
+        this.favoriteProductBusinessRules.checkIfProductAlreadyFavorite(
+                createFavoriteProductRequest.getCustomerId(),
+                createFavoriteProductRequest.getProductId()
+        );
+
         Product product = this.productsRepository.findById(createFavoriteProductRequest.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with id"));
 
@@ -93,6 +101,8 @@ public class FavoriteProductManager implements FavoriteProductService {
     @Override
     public void update(UpdateFavoriteProductRequest updateFavoriteProductRequest) {
 
+        this.favoriteProductBusinessRules.checkIfFavoriteProductExits(updateFavoriteProductRequest.getProductId());
+
         Product product = this.productsRepository.findById(updateFavoriteProductRequest.getCustomerId())
                 .orElseThrow(() -> new EntityNotFoundException("product not found with id"));
 
@@ -109,6 +119,8 @@ public class FavoriteProductManager implements FavoriteProductService {
 
     @Override
     public void delete(Long id) {
+        //Favori ürün var mi.
+        this.favoriteProductBusinessRules.checkIfFavoriteProductExits(id);
         this.favoriteProductRepository.deleteById(id);
     }
 }
