@@ -45,6 +45,10 @@ public class Customer extends BaseEntity {
     @JsonIgnore
     private List<Address> addresses;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Comment> comments;
+
 
 
 }

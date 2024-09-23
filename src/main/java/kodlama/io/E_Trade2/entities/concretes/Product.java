@@ -47,4 +47,8 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product" , fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     private List<FavoriteProduct> productFavorites;
+
+    @OneToMany(mappedBy = "product" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Comment> comments;
 }

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class GetByIdBrandResponse {
 
+    private Long id;
     private LocalDateTime createAt;
     private LocalDateTime updateDate;
     private String name;

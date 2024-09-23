@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class GetByIdOrderItemResponse {
 
+    private Long id;
     private LocalDateTime createAt;
     private LocalDateTime updateDate;
     private int quantity;
