@@ -26,4 +26,8 @@ public interface CommentService {
 
     void delete(Long id);
 
+    void deleteComment(Long comment,Long userId);
+
+
+
 }

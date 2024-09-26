@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import kodlama.io.E_Trade2.base.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Table(name = "users")
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class User extends BaseEntity {
 
     @Column(name = "firstName")

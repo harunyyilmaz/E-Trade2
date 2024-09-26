@@ -1,6 +1,7 @@
 package kodlama.io.E_Trade2.business.concretes;
 
 import kodlama.io.E_Trade2.business.abstracts.CommentService;
+import kodlama.io.E_Trade2.business.rules.CommentBusinessRules;
 import kodlama.io.E_Trade2.core.utilities.exceptions.BusinessException;
 import kodlama.io.E_Trade2.core.utilities.mappers.ModelMapperService;
 import kodlama.io.E_Trade2.dataBase.abstracts.CommentRepository;
@@ -18,6 +19,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.tokens.CommentToken;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -32,9 +34,11 @@ public class CommentManager implements CommentService {
     private ModelMapperService modelMapperService;
     private ProductsRepository productsRepository;
     private CustomersRepository customersRepository;
+    private CommentBusinessRules commentBusinessRules;
 
     @Override
     public List<GetAllCommentResponse> getAll() {
+
         List<Comment> comments = this.commentRepository.findAll();
 
         List<GetAllCommentResponse> getAllCommentResponses = comments.stream()
@@ -142,8 +146,12 @@ public class CommentManager implements CommentService {
     @Override
     public void add(CreateCommentRequest createCommentRequest) {
 
-        Comment comment = new Comment();
+        this.commentBusinessRules.checkIfContentExists(createCommentRequest.getContent());
+        this.commentBusinessRules.validateCommentTimeConstraint(createCommentRequest.getProductId(), createCommentRequest.getCustomerId());
 
+        //iş kurallarına odaklanır ve ürün ve müşteri ilişkilerinin geçerliliğini ve iş kurallarına uygunluğunu doğrular.
+        this.commentBusinessRules.validateCommentAssociations(createCommentRequest.getProductId(), createCommentRequest.getCustomerId());
+        Comment comment = new Comment();
         comment.setContent(comment.getContent());
 
         Product product = this.productsRepository.findById(createCommentRequest.getProductId())
@@ -159,6 +167,8 @@ public class CommentManager implements CommentService {
 
     @Override
     public void update(Long commentId, UpdateCommentRequest updateCommentRequest) {
+
+        this.commentBusinessRules.checkIfContentExists(updateCommentRequest.getContent());
 
         Comment comment = this.commentRepository.findById(commentId)
                 .orElseThrow(() -> new BusinessException("Comment not found with id"));
@@ -183,4 +193,19 @@ public class CommentManager implements CommentService {
     public void delete(Long id) {
         this.commentRepository.deleteById(id);
     }
+
+    @Override // veritabanindan silememis oluruz böylelikle.
+    public void deleteComment(Long commentId, Long userId) {
+
+        this.commentBusinessRules.validateDeletePermission(commentId,userId);
+
+        Comment comment = this.commentRepository.findById(userId)
+                .orElseThrow(()-> new BusinessException("comment not found"));
+
+        comment.setDeleted(true); // Yumusak silme
+        comment.setDeletedAt(LocalDateTime.now());
+        this.commentRepository.save(comment);
+    }
+
+
 }

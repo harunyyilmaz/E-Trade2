@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.Duration;
 import java.util.HashMap;
 
 @SpringBootApplication
@@ -51,5 +52,10 @@ public class ETrade2Application {
     @Bean
     ModelMapper getModelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public Duration commentTimeLimit() {
+        return Duration.ofHours(1); // İhtiyacınıza göre süreyi ayarlayın
     }
 }
