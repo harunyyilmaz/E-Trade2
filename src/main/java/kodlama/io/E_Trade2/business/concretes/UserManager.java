@@ -14,6 +14,7 @@ import java.util.Set;
 
 @Service
 @AllArgsConstructor
+
 public class UserManager implements UserService {
 
     private UserRepository userRepository;
@@ -27,7 +28,7 @@ public class UserManager implements UserService {
         Set<Role> roles = new HashSet<>();
         Role role = this.roleRepository.findByName(roleName);
 
-        if (role == null){
+        if (role == null) {
             role = new Role();
             role.setName(roleName);
             role.setDescription(roleName + "description");
@@ -37,4 +38,5 @@ public class UserManager implements UserService {
         user.setRoles(roles);
         userRepository.save(user);
     }
+
 }

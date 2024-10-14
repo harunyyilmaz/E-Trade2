@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,7 @@ public class GetByIdProductResponse {
     private LocalDateTime updateDate;
     private String name;
     private String descriptions;
-    private double price;
+    private BigDecimal price;
     private int quantity;
     private Long categoryId;
     private String categoryName;

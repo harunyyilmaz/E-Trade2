@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import kodlama.io.E_Trade2.base.BaseEntity;
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +24,7 @@ public class Product extends BaseEntity {
     @Column(name = "descriptions")
     private String descriptions;
     @Column(name = "price")
-    private double price;
+    private BigDecimal price;
     @Column(name = "quantity")
     private int quantity;
 
@@ -51,4 +53,7 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    private List<CartItem> cartItems = new ArrayList<>();
 }

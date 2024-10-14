@@ -16,6 +16,7 @@ import kodlama.io.E_Trade2.entities.concretes.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -78,7 +79,8 @@ public class ProductManager implements ProductService {
 
         Optional.ofNullable(updateProductRequest.getName()).ifPresent(product::setName);
         Optional.ofNullable(updateProductRequest.getDescriptions()).ifPresent(product::setDescriptions);
-        Optional.of(updateProductRequest.getPrice()).filter(price -> price > 0).ifPresent(product::setPrice);
+        Optional.of(updateProductRequest.getPrice()).filter(price-> price.compareTo(BigDecimal.ZERO)>0)
+                        .ifPresent(product::setPrice);
         Optional.of(updateProductRequest.getQuantity()).filter(quantity -> quantity > 0).ifPresent(product::setQuantity);
 
         Optional.ofNullable(updateProductRequest.getCategoryName()).ifPresent(categoryName -> {

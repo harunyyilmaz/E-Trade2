@@ -1,5 +1,6 @@
 package kodlama.io.E_Trade2.security;
 
+
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -49,7 +50,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
                     UserDetails userDetails = userDetailsService.loadUserByUsername(email);
                     //Kullanicinin veritabanindan kullanici detaylarini alir yani bilgileri yükler.
-                                                                                                                                    // Spring Security'nin yetkilendirme kararlarını verirken kullanacağı rolleri belirtir.
+                    // Spring Security'nin yetkilendirme kararlarını verirken kullanacağı rolleri belirtir.
                     UsernamePasswordAuthenticationToken authToken= new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                     //Spring Scrty de kullanicinin kimlik dogrulama ve yetkilendirme bilgilerini temsil eder.
                     //Bu sınıf, genellikle kullanıcı adı ve parola ile kimlik doğrulaması yaparken veya
@@ -77,8 +78,9 @@ public class JwtFilter extends OncePerRequestFilter {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Invalid JWT Token");
                     //Gönderilen Jwt nin gecersiz oldugunu ve islem yapilamayacagini gösterir.
                 }
-                filterChain.doFilter(request,response);
             }
         }
+        filterChain.doFilter(request,response);
+
     }
 }

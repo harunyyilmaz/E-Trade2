@@ -1,9 +1,10 @@
 package kodlama.io.E_Trade2.webApiControllers;
 
+import kodlama.io.E_Trade2.security.JwtUtil;
 import kodlama.io.E_Trade2.business.abstracts.UserService;
 import kodlama.io.E_Trade2.dtos.requests.LoginRequest;
 import kodlama.io.E_Trade2.entities.concretes.User;
-import kodlama.io.E_Trade2.security.JwtUtil;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

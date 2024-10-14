@@ -1,8 +1,8 @@
 package kodlama.io.E_Trade2.config;
 
 import jakarta.servlet.http.HttpServletResponse;
-import kodlama.io.E_Trade2.dataBase.abstracts.UserRepository;
 import kodlama.io.E_Trade2.security.JwtFilter;
+import kodlama.io.E_Trade2.dataBase.abstracts.UserRepository;
 import kodlama.io.E_Trade2.security.SecurityService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +18,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.apache.naming.ResourceRef.AUTH;
 
 @Configuration
 @EnableWebSecurity
@@ -30,6 +31,7 @@ public class SecurityConfiguration {
     private UserRepository userRepository;
     private JwtFilter filter;
     private SecurityService uds;
+
 
     private static final String[] AUTH_WHITELIST = {
             "/auth/**",
@@ -55,6 +57,7 @@ public class SecurityConfiguration {
             "/product",
             "/categories"
     };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -74,11 +77,11 @@ public class SecurityConfiguration {
                     // davranacagini ve hangi tür istekleri kabul edecegini belirler.
                 }))
                 .authorizeHttpRequests(authz -> authz //yetkilendirme yapilandirmasi icin kullanilan bir lambda
-                        .requestMatchers("AUTH-WHITELIST").permitAll()
-                        .requestMatchers("/user/**", "/categories/", "/product/**").hasRole("USER")
-                        .requestMatchers("/customer/**", "/categories/**", "/product/**").hasRole("CUSTOMER")
-                        .requestMatchers("/**").hasRole("ADMIN")
-                        .requestMatchers("USER_AUTH_WHITELIST").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers(AUTH_WHITELIST).permitAll()
+                                .requestMatchers("/user/**", "/categories/", "/product/**").hasRole("USER")
+                                .requestMatchers("/customer/**", "/categories/**", "/product/**").hasRole("CUSTOMER")
+                                .requestMatchers("/**").hasRole("ADMIN")
+                                .requestMatchers(USER_AUTH_WHITELIST).hasAuthority("ROLE_ADMIN")
                         //hasAuthority daha genel nir yetkilendirme kontrolü saglar.
                         //Bu kod SpringSecuriy deHTTP isteklerini yetkilendirme yapilandirmasini saglar.
                         //URL desenlerine bagli olarak hangi rollerin veya yetkilerin gerekli oldugunu belirler.
@@ -86,9 +89,9 @@ public class SecurityConfiguration {
                 .userDetailsService(uds)//kullanici detaylarini yüklemek icin(uds) nesnesi
                 // veritabanindan veya baska bir kaynaktan kullanici bilgilerini getirebilir.
                 .exceptionHandling(exception->exception //kimlik dogrulama hatalarini nasil isleyeceginizi belirlemek icin kullanilam bir(lambda) fonksiyonudur.
-                                                        //örnegin yetkisiz erisim denemeleri nasil isleyecegimizi belirlememize olanak tanir.
+                        //örnegin yetkisiz erisim denemeleri nasil isleyecegimizi belirlememize olanak tanir.
                         .authenticationEntryPoint((request, response, authException) ->
-                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorizet")
+                                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorizet")
                                 //Bu kod parcasi SpringSecurity nin kullanici detaylarini yüklemek ve
                                 //yetkilendirme hatalarini islemek icin yapilandirilmistir.
                         )
@@ -110,6 +113,8 @@ public class SecurityConfiguration {
         //Bu yapilandirmalar,uygulamanin güvenlik polistikasini tanimlar ve HTTP isteklerinin nasil islenecegini belirler.
 
     }
+
+
     //Asagidaki bu iki metot uygulamanin güvenlik yapilandirmasini olusturur ve kullanici kimlik dogrulama
     //sifreleme islemlerini güvenli hale getirir.
     @Bean

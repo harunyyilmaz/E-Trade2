@@ -22,7 +22,7 @@ public class CustomersController {
 
     private CustomerService customerService;
 
-    @GetMapping
+    @GetMapping()
     public Set<GetAllCustomersResponse> getAll() {
         return this.customerService.getAll();
     }

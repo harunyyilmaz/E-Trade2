@@ -160,8 +160,8 @@ public class BrandManager implements BrandService {
             //Markanin ürün listesinden ürünü kaldir
             brand.getProducts().remove(product);
 
-            this.brandRepository.save(brand);
             this.productsRepository.save(product);
+            this.brandRepository.save(brand);
         } else {
             throw new BusinessException("Product is not associated with this brand.");
         }

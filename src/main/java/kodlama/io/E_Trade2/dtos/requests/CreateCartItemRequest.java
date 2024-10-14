@@ -2,25 +2,26 @@ package kodlama.io.E_Trade2.dtos.requests;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateCategoriesRequest {
+public class CreateCartItemRequest {
 
     @NotNull
-    private Long id;
+    private BigDecimal price;
+    @NotNull
+    private int quantity;
 
-    @NotBlank
-    @Size(min = 3, max = 21)
-    private String name;
-
-    @NotBlank
-    @Size(min = 5, max = 200)
-    private String descriptions;
-
+    private LocalDateTime createAt;
+    @NotNull
+    private Long productId;
+    @NotNull
+    private Long cartId;
 }

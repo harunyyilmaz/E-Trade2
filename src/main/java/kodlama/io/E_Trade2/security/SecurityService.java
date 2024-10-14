@@ -1,5 +1,4 @@
 package kodlama.io.E_Trade2.security;
-
 import kodlama.io.E_Trade2.dataBase.abstracts.UserRepository;
 import kodlama.io.E_Trade2.entities.concretes.Role;
 import lombok.AllArgsConstructor;

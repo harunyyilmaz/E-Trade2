@@ -49,6 +49,7 @@ public class Customer extends BaseEntity {
     @JsonIgnore
     private List<Comment> comments;
 
-
+    @OneToOne(mappedBy = "customer" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    private Cart cart;
 
 }
